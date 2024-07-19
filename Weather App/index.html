@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <div class="search">
+            <input type="text" id="cityInput" placeholder="Enter city name">
+            <button id="searchBtn" onclick="show()">Search</button>
+        </div>
+        <div class="current-weather">
+            <h4>Current Weather</h4>
+            <div class="weather-info">
+                <div>City - <span id="cityName"></span></div>
+                <div>Temperature - <span id="temperature"></span></div>
+                <div>Humidity - <span id="humidity"></span></div>
+                <div>Wind Speed - <span id="windSpeed"></span></div>
+            </div>
+        </div>
+    </div>
+</body>
+    <script>
+        function show(){
+        var city = document.getElementById("cityInput").value;
+        url1 = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7e69608d847c2b86c0d63d9515c42965`
+        fetch(url1).then(e => e.json()).then((data)=>{
+            console.log(data)
+            var temp = data.main.temp - 273.15
+            var temp_max = data.main.temp_max - 273.15
+            var temp_min = data.main.temp_min - 273.15
+            var temp = temp.toFixed(1)
+            // var temp_max = temp_max.toFixed(1)
+            // var temp_min = temp_min.tofixed(1)
+            console.log(data.name)
+            document.getElementById("cityName").innerHTML = data.name;
+            document.getElementById("temperature").innerHTML = temp+ "c";
+            document.getElementById("humidity").innerHTML = data.main.humidity;
+            document.getElementById("windSpeed").innerHTML = data.wind.speed + "/Hr";
+            // document.getElementById("max_temp").innerHTML = temp_max+"C";
+            // document.getElementById("min_temp").innerHTML = temp_min+"C";
+        })
+        }
+    </script>
+</body>
+</html>
